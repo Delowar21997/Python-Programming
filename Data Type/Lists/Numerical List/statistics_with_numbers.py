@@ -1,0 +1,5 @@
+digits = list(range(1,11))
+print(f"The list of the digits are -->>: {digits}")
+print(f"The minimum value of the digits is -->>: {min(digits)}")
+print(f"The maximum value of the digits is -->>: {max(digits)}")
+print(f"The summation of the digits is -->>: {sum(digits)}")

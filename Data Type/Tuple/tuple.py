@@ -6,11 +6,11 @@ print(thistuple)
 #Access Tuple Items
 #You can access tuple items by referring to the index number, inside square brackets:
 thistuple = ("apple", "banana", "cherry")
-print(thistuple[1])
+print(thistuple[1].capitalize())
 #Negative Indexing
 #Negative indexing means start from the end, -1 refers to the last item, -2 refers to the second last item etc.
 thistuple = ("apple", "banana", "cherry")
-print(thistuple[-1])
+print(thistuple[-1].capitalize())
 #Range of Indexes
 #You can specify a range of indexes by specifying where to start and where to end the range
 #When specifying a range, the return value will be a new tuple with the specified items.

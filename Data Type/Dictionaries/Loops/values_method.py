@@ -8,3 +8,4 @@ favourite_languages = {
 print(f"My dictionary: \033[1;97m{favourite_languages}\033[0m\n")
 for language in favourite_languages.values():
     print(f"The value of the dictionary: \033[1;92m{language.capitalize()}\033[0m")
+print(f"The list of the dictionary values: \033[1;92m{list(favourite_languages.values())}\033[0m\n")

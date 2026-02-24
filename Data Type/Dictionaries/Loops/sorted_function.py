@@ -6,6 +6,7 @@ print(f"Original my_dict: \033[1;97m{my_dict}\033[0m\n")
 # Sorting by key
 for key in sorted(my_dict.keys()):
     print(f"Sorted by key: \033[1;92m{key.capitalize()}\033[0m")
+print(f"\nList of sorted keys: \033[1;92m{list(sorted(my_dict.keys()))}\033[0m\n")
 print(f"Sorted() func does not change the original dictionary: \033[1;97m\n{my_dict}\033[0m")
 # Sorting by value
 '''print("\nAfter sorting by value:")

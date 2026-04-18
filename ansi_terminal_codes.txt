@@ -1,0 +1,669 @@
+#!/usr/bin/env python3
+"""
+Complete ANSI Escape Codes Reference for Python Terminal/Console
+=================================================================
+This file contains all types of ANSI escape codes with examples.
+"""
+
+# ============================================================================
+# ANSI Color and Style Helper Class
+# ============================================================================
+
+class TermColors:
+    """Helper class for ANSI terminal colors and styles"""
+    
+    # Reset
+    RESET = '\033[0m'
+    
+    # Text Styles
+    BOLD = '\033[1m'
+    DIM = '\033[2m'
+    ITALIC = '\033[3m'
+    UNDERLINE = '\033[4m'
+    BLINK = '\033[5m'
+    BLINK_FAST = '\033[6m'
+    REVERSE = '\033[7m'
+    HIDDEN = '\033[8m'
+    STRIKE = '\033[9m'
+    
+    # Standard Foreground Colors (30-37)
+    BLACK = '\033[30m'
+    RED = '\033[31m'
+    GREEN = '\033[32m'
+    YELLOW = '\033[33m'
+    BLUE = '\033[34m'
+    MAGENTA = '\033[35m'
+    CYAN = '\033[36m'
+    WHITE = '\033[37m'
+    
+    # Bright Foreground Colors (90-97)
+    BRIGHT_BLACK = '\033[90m'
+    BRIGHT_RED = '\033[91m'
+    BRIGHT_GREEN = '\033[92m'
+    BRIGHT_YELLOW = '\033[93m'
+    BRIGHT_BLUE = '\033[94m'
+    BRIGHT_MAGENTA = '\033[95m'
+    BRIGHT_CYAN = '\033[96m'
+    BRIGHT_WHITE = '\033[97m'
+    
+    # Standard Background Colors (40-47)
+    BG_BLACK = '\033[40m'
+    BG_RED = '\033[41m'
+    BG_GREEN = '\033[42m'
+    BG_YELLOW = '\033[43m'
+    BG_BLUE = '\033[44m'
+    BG_MAGENTA = '\033[45m'
+    BG_CYAN = '\033[46m'
+    BG_WHITE = '\033[47m'
+    
+    # Bright Background Colors (100-107)
+    BG_BRIGHT_BLACK = '\033[100m'
+    BG_BRIGHT_RED = '\033[101m'
+    BG_BRIGHT_GREEN = '\033[102m'
+    BG_BRIGHT_YELLOW = '\033[103m'
+    BG_BRIGHT_BLUE = '\033[104m'
+    BG_BRIGHT_MAGENTA = '\033[105m'
+    BG_BRIGHT_CYAN = '\033[106m'
+    BG_BRIGHT_WHITE = '\033[107m'
+    
+    # Cursor Control
+    CURSOR_UP = '\033[{}A'
+    CURSOR_DOWN = '\033[{}B'
+    CURSOR_FORWARD = '\033[{}C'
+    CURSOR_BACK = '\033[{}D'
+    CURSOR_HOME = '\033[H'
+    CURSOR_POSITION = '\033[{};{}H'
+    
+    # Screen Control
+    CLEAR_SCREEN = '\033[2J'
+    CLEAR_LINE = '\033[2K'
+    CLEAR_TO_END = '\033[0J'
+    CLEAR_TO_START = '\033[1J'
+    
+    # Cursor Visibility
+    CURSOR_HIDE = '\033[?25l'
+    CURSOR_SHOW = '\033[?25h'
+    
+    # Save/Restore Cursor
+    CURSOR_SAVE = '\033[s'
+    CURSOR_RESTORE = '\033[u'
+    
+    @staticmethod
+    def rgb(r, g, b):
+        """
+        Create RGB foreground color
+        Args:
+            r, g, b: RGB values (0-255)
+        Returns:
+            ANSI escape code string
+        """
+        return f'\033[38;2;{r};{g};{b}m'
+    
+    @staticmethod
+    def bg_rgb(r, g, b):
+        """
+        Create RGB background color
+        Args:
+            r, g, b: RGB values (0-255)
+        Returns:
+            ANSI escape code string
+        """
+        return f'\033[48;2;{r};{g};{b}m'
+    
+    @staticmethod
+    def color_256(code):
+        """
+        Create 256-color foreground
+        Args:
+            code: Color code (0-255)
+        Returns:
+            ANSI escape code string
+        """
+        return f'\033[38;5;{code}m'
+    
+    @staticmethod
+    def bg_color_256(code):
+        """
+        Create 256-color background
+        Args:
+            code: Color code (0-255)
+        Returns:
+            ANSI escape code string
+        """
+        return f'\033[48;5;{code}m'
+    
+    @staticmethod
+    def move_cursor(row, col):
+        """Move cursor to specific position"""
+        return f'\033[{row};{col}H'
+    
+    @staticmethod
+    def move_up(lines=1):
+        """Move cursor up"""
+        return f'\033[{lines}A'
+    
+    @staticmethod
+    def move_down(lines=1):
+        """Move cursor down"""
+        return f'\033[{lines}B'
+    
+    @staticmethod
+    def move_right(cols=1):
+        """Move cursor right"""
+        return f'\033[{cols}C'
+    
+    @staticmethod
+    def move_left(cols=1):
+        """Move cursor left"""
+        return f'\033[{cols}D'
+
+
+# ============================================================================
+# Demo Functions
+# ============================================================================
+
+def demo_basic_colors():
+    """Demonstrate basic foreground colors"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}BASIC FOREGROUND COLORS{TermColors.RESET}")
+    print("="*60)
+    
+    colors = [
+        ("BLACK", TermColors.BLACK),
+        ("RED", TermColors.RED),
+        ("GREEN", TermColors.GREEN),
+        ("YELLOW", TermColors.YELLOW),
+        ("BLUE", TermColors.BLUE),
+        ("MAGENTA", TermColors.MAGENTA),
+        ("CYAN", TermColors.CYAN),
+        ("WHITE", TermColors.WHITE),
+    ]
+    
+    for name, code in colors:
+        print(f"{code}■ {name}{TermColors.RESET}")
+
+
+def demo_bright_colors():
+    """Demonstrate bright foreground colors"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}BRIGHT FOREGROUND COLORS{TermColors.RESET}")
+    print("="*60)
+    
+    colors = [
+        ("BRIGHT BLACK (GRAY)", TermColors.BRIGHT_BLACK),
+        ("BRIGHT RED", TermColors.BRIGHT_RED),
+        ("BRIGHT GREEN", TermColors.BRIGHT_GREEN),
+        ("BRIGHT YELLOW", TermColors.BRIGHT_YELLOW),
+        ("BRIGHT BLUE", TermColors.BRIGHT_BLUE),
+        ("BRIGHT MAGENTA", TermColors.BRIGHT_MAGENTA),
+        ("BRIGHT CYAN", TermColors.BRIGHT_CYAN),
+        ("BRIGHT WHITE", TermColors.BRIGHT_WHITE),
+    ]
+    
+    for name, code in colors:
+        print(f"{code}■ {name}{TermColors.RESET}")
+
+
+def demo_background_colors():
+    """Demonstrate background colors"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}BACKGROUND COLORS{TermColors.RESET}")
+    print("="*60)
+    
+    backgrounds = [
+        ("BLACK BG", TermColors.BG_BLACK, TermColors.WHITE),
+        ("RED BG", TermColors.BG_RED, TermColors.WHITE),
+        ("GREEN BG", TermColors.BG_GREEN, TermColors.BLACK),
+        ("YELLOW BG", TermColors.BG_YELLOW, TermColors.BLACK),
+        ("BLUE BG", TermColors.BG_BLUE, TermColors.WHITE),
+        ("MAGENTA BG", TermColors.BG_MAGENTA, TermColors.WHITE),
+        ("CYAN BG", TermColors.BG_CYAN, TermColors.BLACK),
+        ("WHITE BG", TermColors.BG_WHITE, TermColors.BLACK),
+    ]
+    
+    for name, bg_code, fg_code in backgrounds:
+        print(f"{bg_code}{fg_code}  {name}  {TermColors.RESET}")
+
+
+def demo_text_styles():
+    """Demonstrate text styles"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}TEXT STYLES{TermColors.RESET}")
+    print("="*60)
+    
+    styles = [
+        ("Bold", TermColors.BOLD),
+        ("Dim/Faint", TermColors.DIM),
+        ("Italic", TermColors.ITALIC),
+        ("Underline", TermColors.UNDERLINE),
+        ("Blink", TermColors.BLINK),
+        ("Reverse", TermColors.REVERSE),
+        ("Hidden", TermColors.HIDDEN),
+        ("Strikethrough", TermColors.STRIKE),
+    ]
+    
+    for name, code in styles:
+        print(f"{code}{name} text{TermColors.RESET}")
+
+
+def demo_combined_formatting():
+    """Demonstrate combined formatting"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}COMBINED FORMATTING{TermColors.RESET}")
+    print("="*60)
+    
+    print(f"{TermColors.BOLD}{TermColors.RED}Bold Red{TermColors.RESET}")
+    print(f"{TermColors.UNDERLINE}{TermColors.GREEN}Underlined Green{TermColors.RESET}")
+    print(f"{TermColors.BOLD}{TermColors.UNDERLINE}{TermColors.YELLOW}Bold Underlined Yellow{TermColors.RESET}")
+    print(f"{TermColors.REVERSE}{TermColors.MAGENTA}Inverted Magenta{TermColors.RESET}")
+    print(f"{TermColors.BOLD}{TermColors.BRIGHT_WHITE}{TermColors.BG_RED}Bold White on Red{TermColors.RESET}")
+    print(f"{TermColors.ITALIC}{TermColors.CYAN}Italic Cyan{TermColors.RESET}")
+    print(f"{TermColors.STRIKE}{TermColors.BRIGHT_RED}Strikethrough Red{TermColors.RESET}")
+
+
+def demo_256_colors():
+    """Demonstrate 256-color palette"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}256 COLOR PALETTE{TermColors.RESET}")
+    print("="*60)
+    
+    # Standard colors (0-15)
+    print("\nStandard Colors (0-15):")
+    for i in range(16):
+        print(f"{TermColors.color_256(i)}{i:3d}{TermColors.RESET}", end=" ")
+    print()
+    
+    # 216 color cube (16-231)
+    print("\n216 Color Cube (16-231):")
+    for i in range(16, 232):
+        print(f"{TermColors.color_256(i)}█{TermColors.RESET}", end="")
+        if (i - 15) % 36 == 0:
+            print()
+    
+    # Grayscale (232-255)
+    print("\nGrayscale (232-255):")
+    for i in range(232, 256):
+        print(f"{TermColors.color_256(i)}█{TermColors.RESET}", end="")
+    print()
+
+
+def demo_rgb_colors():
+    """Demonstrate RGB true color"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}RGB TRUE COLOR (24-bit){TermColors.RESET}")
+    print("="*60)
+    
+    # Custom colors
+    print(f"\n{TermColors.rgb(255, 100, 0)}Custom Orange{TermColors.RESET}")
+    print(f"{TermColors.rgb(255, 182, 193)}Light Pink{TermColors.RESET}")
+    print(f"{TermColors.rgb(70, 130, 180)}Steel Blue{TermColors.RESET}")
+    print(f"{TermColors.bg_rgb(0, 128, 255)}Blue Background{TermColors.RESET}")
+    
+    # RGB gradient
+    print("\nRGB Gradient:")
+    for i in range(0, 256, 4):
+        print(f"{TermColors.bg_rgb(i, 100, 255-i)} {TermColors.RESET}", end="")
+    print()
+    
+    # Rainbow effect
+    print("\nRainbow:")
+    colors = [
+        (255, 0, 0),    # Red
+        (255, 127, 0),  # Orange
+        (255, 255, 0),  # Yellow
+        (0, 255, 0),    # Green
+        (0, 0, 255),    # Blue
+        (75, 0, 130),   # Indigo
+        (148, 0, 211),  # Violet
+    ]
+    
+    for r, g, b in colors:
+        print(f"{TermColors.bg_rgb(r, g, b)}     {TermColors.RESET}", end="")
+    print()
+
+
+def demo_status_messages():
+    """Demonstrate common status messages"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}STATUS MESSAGES{TermColors.RESET}")
+    print("="*60)
+    
+    print(f"\n{TermColors.BOLD}{TermColors.GREEN}✓ Success:{TermColors.RESET} Operation completed successfully")
+    print(f"{TermColors.BOLD}{TermColors.RED}✗ Error:{TermColors.RESET} Something went wrong")
+    print(f"{TermColors.BOLD}{TermColors.YELLOW}⚠ Warning:{TermColors.RESET} This might cause issues")
+    print(f"{TermColors.BOLD}{TermColors.CYAN}ℹ Info:{TermColors.RESET} For your information")
+    print(f"{TermColors.BOLD}{TermColors.BLUE}⟳ Loading:{TermColors.RESET} Please wait...")
+
+
+def demo_tables():
+    """Demonstrate table formatting"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}TABLE FORMATTING{TermColors.RESET}")
+    print("="*60)
+    
+    # Simple table
+    print(f"\n{TermColors.BOLD}{TermColors.BG_BLUE}{TermColors.WHITE} Name          Age    City          {TermColors.RESET}")
+    print(f"{TermColors.CYAN} Alice         25     New York      {TermColors.RESET}")
+    print(f"{TermColors.CYAN} Bob           30     Los Angeles   {TermColors.RESET}")
+    print(f"{TermColors.CYAN} Charlie       28     Chicago       {TermColors.RESET}")
+
+
+def demo_progress_bars():
+    """Demonstrate progress bar styles"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}PROGRESS BARS{TermColors.RESET}")
+    print("="*60)
+    
+    import time
+    
+    # Simple progress bar
+    print("\nSimple Progress:")
+    for i in range(0, 101, 10):
+        filled = i // 2
+        bar = '█' * filled + '░' * (50 - filled)
+        print(f"\r{TermColors.GREEN}{bar}{TermColors.RESET} {i}%", end="", flush=True)
+        time.sleep(0.2)
+    print()
+    
+    # Colored progress bar
+    print("\nColored Progress:")
+    for i in range(0, 101, 10):
+        filled = i // 2
+        if i < 30:
+            color = TermColors.RED
+        elif i < 70:
+            color = TermColors.YELLOW
+        else:
+            color = TermColors.GREEN
+        
+        bar = '█' * filled + '░' * (50 - filled)
+        print(f"\r{color}{bar}{TermColors.RESET} {i}%", end="", flush=True)
+        time.sleep(0.2)
+    print()
+
+
+def demo_boxes():
+    """Demonstrate box drawing"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}BOX DRAWING{TermColors.RESET}")
+    print("="*60)
+    
+    # Simple box
+    print(f"\n{TermColors.CYAN}╔═══════════════════════════╗{TermColors.RESET}")
+    print(f"{TermColors.CYAN}║{TermColors.RESET}  {TermColors.BOLD}This is a box{TermColors.RESET}         {TermColors.CYAN}║{TermColors.RESET}")
+    print(f"{TermColors.CYAN}║{TermColors.RESET}  with content inside     {TermColors.CYAN}║{TermColors.RESET}")
+    print(f"{TermColors.CYAN}╚═══════════════════════════╝{TermColors.RESET}")
+    
+    # Info box
+    print(f"\n{TermColors.BG_BLUE}{TermColors.WHITE} INFO {TermColors.RESET}")
+    print(f"{TermColors.BLUE}┌─────────────────────────────────┐{TermColors.RESET}")
+    print(f"{TermColors.BLUE}│{TermColors.RESET} This is an information box      {TermColors.BLUE}│{TermColors.RESET}")
+    print(f"{TermColors.BLUE}│{TermColors.RESET} with multiple lines of text     {TermColors.BLUE}│{TermColors.RESET}")
+    print(f"{TermColors.BLUE}└─────────────────────────────────┘{TermColors.RESET}")
+
+
+def demo_cursor_control():
+    """Demonstrate cursor control"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}CURSOR CONTROL DEMO{TermColors.RESET}")
+    print("="*60)
+    
+    import time
+    
+    print("\nWatch the cursor movement:")
+    print("Starting position")
+    time.sleep(1)
+    
+    # Move up and write
+    print(TermColors.move_up(1), end="")
+    print(f"{TermColors.GREEN}Modified!{TermColors.RESET}       ")
+    
+    # Move down
+    print(TermColors.move_down(2), end="")
+    print("Below the starting position")
+
+
+def demo_screen_control():
+    """Demonstrate screen control codes"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}SCREEN CONTROL CODES{TermColors.RESET}")
+    print("="*60)
+    
+    print("\nScreen Control Examples:")
+    print("\\033[2J  - Clear entire screen")
+    print("\\033[2K  - Clear entire line")
+    print("\\033[0J  - Clear from cursor to end of screen")
+    print("\\033[1J  - Clear from cursor to beginning of screen")
+    print("\\033[H   - Move cursor to home (0,0)")
+    print("\\033[?25l - Hide cursor")
+    print("\\033[?25h - Show cursor")
+
+
+def demo_all_raw_codes():
+    """Show raw ANSI escape codes"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}RAW ANSI ESCAPE CODES{TermColors.RESET}")
+    print("="*60)
+    
+    print("\nForeground Colors (30-37):")
+    for i in range(30, 38):
+        print(f"\\033[{i}m → \033[{i}mColor {i}\033[0m")
+    
+    print("\nBackground Colors (40-47):")
+    for i in range(40, 48):
+        print(f"\\033[{i}m → \033[{i}m Color {i} \033[0m")
+    
+    print("\nText Styles:")
+    styles = {
+        0: "Reset", 1: "Bold", 2: "Dim", 3: "Italic",
+        4: "Underline", 5: "Blink", 7: "Reverse", 9: "Strike"
+    }
+    for code, name in styles.items():
+        print(f"\\033[{code}m → \033[{code}m{name}\033[0m")
+    
+    print("\n256 Colors:")
+    print("\\033[38;5;<n>m → Foreground color (n: 0-255)")
+    print("\\033[48;5;<n>m → Background color (n: 0-255)")
+    
+    print("\nRGB Colors:")
+    print("\\033[38;2;<r>;<g>;<b>m → Foreground RGB")
+    print("\\033[48;2;<r>;<g>;<b>m → Background RGB")
+
+
+# ============================================================================
+# Practical Examples
+# ============================================================================
+
+def example_logger():
+    """Example: Colored logging"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}EXAMPLE: COLORED LOGGER{TermColors.RESET}")
+    print("="*60)
+    
+    def log(level, message):
+        levels = {
+            "DEBUG": (TermColors.BLUE, "🔍"),
+            "INFO": (TermColors.CYAN, "ℹ"),
+            "SUCCESS": (TermColors.GREEN, "✓"),
+            "WARNING": (TermColors.YELLOW, "⚠"),
+            "ERROR": (TermColors.RED, "✗"),
+            "CRITICAL": (TermColors.BG_RED + TermColors.WHITE, "💀"),
+        }
+        color, icon = levels.get(level, (TermColors.RESET, "•"))
+        print(f"{color}{icon} {level}:{TermColors.RESET} {message}")
+    
+    print()
+    log("DEBUG", "Debugging information")
+    log("INFO", "Application started")
+    log("SUCCESS", "Connection established")
+    log("WARNING", "Low memory warning")
+    log("ERROR", "Failed to load configuration")
+    log("CRITICAL", "System shutdown required")
+
+
+def example_menu():
+    """Example: Interactive menu"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}EXAMPLE: INTERACTIVE MENU{TermColors.RESET}")
+    print("="*60)
+    
+    print(f"\n{TermColors.BG_CYAN}{TermColors.BLACK} MAIN MENU {TermColors.RESET}")
+    print(f"{TermColors.CYAN}╔════════════════════════════╗{TermColors.RESET}")
+    print(f"{TermColors.CYAN}║{TermColors.RESET} {TermColors.BOLD}1.{TermColors.RESET} New Project          {TermColors.CYAN}║{TermColors.RESET}")
+    print(f"{TermColors.CYAN}║{TermColors.RESET} {TermColors.BOLD}2.{TermColors.RESET} Open Existing        {TermColors.CYAN}║{TermColors.RESET}")
+    print(f"{TermColors.CYAN}║{TermColors.RESET} {TermColors.BOLD}3.{TermColors.RESET} Settings             {TermColors.CYAN}║{TermColors.RESET}")
+    print(f"{TermColors.CYAN}║{TermColors.RESET} {TermColors.BOLD}4.{TermColors.RESET} Exit                 {TermColors.CYAN}║{TermColors.RESET}")
+    print(f"{TermColors.CYAN}╚════════════════════════════╝{TermColors.RESET}")
+
+
+def example_dashboard():
+    """Example: System dashboard"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}EXAMPLE: SYSTEM DASHBOARD{TermColors.RESET}")
+    print("="*60)
+    
+    print(f"\n{TermColors.BG_BLUE}{TermColors.WHITE} SYSTEM MONITOR {TermColors.RESET}\n")
+    
+    # CPU Usage
+    cpu = 45
+    cpu_bar = "█" * (cpu // 2) + "░" * (50 - cpu // 2)
+    cpu_color = TermColors.GREEN if cpu < 50 else TermColors.YELLOW if cpu < 80 else TermColors.RED
+    print(f"{TermColors.BOLD}CPU:{TermColors.RESET}    {cpu_color}{cpu_bar}{TermColors.RESET} {cpu}%")
+    
+    # Memory Usage
+    mem = 72
+    mem_bar = "█" * (mem // 2) + "░" * (50 - mem // 2)
+    mem_color = TermColors.GREEN if mem < 50 else TermColors.YELLOW if mem < 80 else TermColors.RED
+    print(f"{TermColors.BOLD}Memory:{TermColors.RESET} {mem_color}{mem_bar}{TermColors.RESET} {mem}%")
+    
+    # Disk Usage
+    disk = 88
+    disk_bar = "█" * (disk // 2) + "░" * (50 - disk // 2)
+    disk_color = TermColors.GREEN if disk < 50 else TermColors.YELLOW if disk < 80 else TermColors.RED
+    print(f"{TermColors.BOLD}Disk:{TermColors.RESET}   {disk_color}{disk_bar}{TermColors.RESET} {disk}%")
+    
+    # Status
+    print(f"\n{TermColors.BOLD}Status:{TermColors.RESET} {TermColors.GREEN}● Online{TermColors.RESET}")
+    print(f"{TermColors.BOLD}Uptime:{TermColors.RESET} 5 days, 12 hours")
+
+
+# ============================================================================
+# Main Demo Runner
+# ============================================================================
+
+def run_all_demos():
+    """Run all demonstration functions"""
+    print("\n")
+    print("╔════════════════════════════════════════════════════════════╗")
+    print(f"║ {TermColors.BOLD}{TermColors.CYAN}  COMPLETE ANSI ESCAPE CODES DEMONSTRATION{TermColors.RESET}              ║")
+    print("╚════════════════════════════════════════════════════════════╝")
+    
+    demos = [
+        demo_basic_colors,
+        demo_bright_colors,
+        demo_background_colors,
+        demo_text_styles,
+        demo_combined_formatting,
+        demo_256_colors,
+        demo_rgb_colors,
+        demo_status_messages,
+        demo_tables,
+        demo_boxes,
+        demo_cursor_control,
+        demo_screen_control,
+        demo_all_raw_codes,
+        example_logger,
+        example_menu,
+        example_dashboard,
+        demo_progress_bars,
+    ]
+    
+    for demo in demos:
+        demo()
+        input(f"\n{TermColors.DIM}Press Enter to continue...{TermColors.RESET}")
+
+
+# ============================================================================
+# Usage Examples
+# ============================================================================
+
+def usage_examples():
+    """Show simple usage examples"""
+    print("\n" + "="*60)
+    print(f"{TermColors.BOLD}SIMPLE USAGE EXAMPLES{TermColors.RESET}")
+    print("="*60)
+    
+    print("\n# Example 1: Basic colored output")
+    print("print(f'{TermColors.RED}Error!{TermColors.RESET}')")
+    print(f"{TermColors.RED}Error!{TermColors.RESET}")
+    
+    print("\n# Example 2: Combined styles")
+    print("print(f'{TermColors.BOLD}{TermColors.UNDERLINE}Important{TermColors.RESET}')")
+    print(f"{TermColors.BOLD}{TermColors.UNDERLINE}Important{TermColors.RESET}")
+    
+    print("\n# Example 3: Custom RGB color")
+    print("print(f'{TermColors.rgb(255, 100, 0)}Orange{TermColors.RESET}')")
+    print(f"{TermColors.rgb(255, 100, 0)}Orange{TermColors.RESET}")
+    
+    print("\n# Example 4: Background color")
+    print("print(f'{TermColors.BG_GREEN}{TermColors.BLACK}Success{TermColors.RESET}')")
+    print(f"{TermColors.BG_GREEN}{TermColors.BLACK}Success{TermColors.RESET}")
+
+
+# ============================================================================
+# Main Entry Point
+# ============================================================================
+
+if __name__ == "__main__":
+    import sys
+    
+    print(f"\n{TermColors.BOLD}ANSI Terminal Codes Demo{TermColors.RESET}")
+    print("Choose an option:")
+    print("1. Run all demos (interactive)")
+    print("2. Run specific demo")
+    print("3. Show usage examples")
+    print("4. Quick color test")
+    
+    choice = input("\nEnter choice (1-4) or press Enter for quick test: ").strip()
+    
+    if choice == "1":
+        run_all_demos()
+    elif choice == "2":
+        print("\nAvailable demos:")
+        demos = [
+            ("Basic Colors", demo_basic_colors),
+            ("Bright Colors", demo_bright_colors),
+            ("Background Colors", demo_background_colors),
+            ("Text Styles", demo_text_styles),
+            ("Combined Formatting", demo_combined_formatting),
+            ("256 Colors", demo_256_colors),
+            ("RGB Colors", demo_rgb_colors),
+            ("Status Messages", demo_status_messages),
+            ("Tables", demo_tables),
+            ("Boxes", demo_boxes),
+            ("Progress Bars", demo_progress_bars),
+            ("Logger Example", example_logger),
+            ("Menu Example", example_menu),
+            ("Dashboard Example", example_dashboard),
+        ]
+        for i, (name, _) in enumerate(demos, 1):
+            print(f"{i}. {name}")
+        
+        demo_choice = input("\nEnter demo number: ").strip()
+        try:
+            idx = int(demo_choice) - 1
+            if 0 <= idx < len(demos):
+                demos[idx][1]()
+            else:
+                print("Invalid choice")
+        except ValueError:
+            print("Invalid input")
+    elif choice == "3":
+        usage_examples()
+    else:
+        # Quick color test (default)
+        demo_basic_colors()
+        demo_text_styles()
+        demo_status_messages()
+    
+    print(f"\n{TermColors.GREEN}Demo complete!{TermColors.RESET}\n")
